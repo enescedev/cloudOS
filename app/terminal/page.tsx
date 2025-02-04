@@ -20,7 +20,7 @@ interface SSHConnection {
 }
 
 // Terminal bileşenini dinamik olarak import et
-const XtermTerminal = dynamic(() => import('@/components/XtermTerminal'), {
+const XtermTerminal = dynamic(() => import('@/components/xtermTerminal'), {
   ssr: false
 })
 

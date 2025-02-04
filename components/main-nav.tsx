@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog"
 import { SimpleChat } from "@/components/simple-chat"
 import { ChatDialog } from "./chat-dialog"
+import { BashDialog } from "./bash-dialog"
 
 const components: { title: string; href: string; description: string; icon: React.ReactNode }[] = [
   {
@@ -65,6 +66,7 @@ export function MainNav() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false)
   const [isAIOpen, setIsAIOpen] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const [isBashOpen, setIsBashOpen] = useState(false)
 
   return (
     <>
@@ -109,9 +111,18 @@ export function MainNav() {
               Chat
             </button>
           </NavigationMenuItem>
-          <NavigationMenuItem>
+          {/* <NavigationMenuItem>
             <button
               onClick={() => setIsTerminalOpen(true)}
+              className={navigationMenuTriggerStyle()}
+            >
+              <Terminal className="w-4 h-4 mr-2" />
+              Bash
+            </button>
+          </NavigationMenuItem> */}
+          <NavigationMenuItem>
+            <button
+              onClick={() => setIsBashOpen(true)}
               className={navigationMenuTriggerStyle()}
             >
               <Terminal className="w-4 h-4 mr-2" />
@@ -150,6 +161,10 @@ export function MainNav() {
           <SimpleChat />
         </DialogContent>
       </Dialog>
+      <BashDialog 
+        isOpen={isBashOpen}
+        onOpenChange={setIsBashOpen}
+      />
     </>
   )
 }
