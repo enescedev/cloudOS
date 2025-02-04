@@ -61,8 +61,8 @@ export default function S3Page() {
       <main className="container mx-auto px-6 py-12">
         <Card>
           <CardHeader>
-            <CardTitle>S3 Manager</CardTitle>
-            <CardDescription>S3 uyumlu depolama sistemi yönetimi</CardDescription>
+            <CardTitle>Bucket</CardTitle>
+            <CardDescription>S3 Storage Manage</CardDescription>
           </CardHeader>
           <CardContent>
             {!isConnected ? (

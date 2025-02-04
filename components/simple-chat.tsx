@@ -72,9 +72,9 @@ export function SimpleChat() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <ScrollArea className="h-[400px] p-4 border rounded-lg">
-        <div className="flex flex-col gap-4">
+    <div className="flex flex-col h-full">
+      <ScrollArea className="flex-1 mb-4">
+        <div className="flex flex-col gap-4 p-4">
           {messages.map(message => (
             <div
               key={message.id}
@@ -95,7 +95,7 @@ export function SimpleChat() {
           )}
         </div>
       </ScrollArea>
-      <div className="flex gap-2">
+      <div className="flex gap-2 p-2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <Input
           value={input}
           onChange={e => setInput(e.target.value)}

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Terminal, Code2, Chrome, MessageSquare, Layout, Database, User, Settings, Home } from "lucide-react"
+import { Terminal, Code2, Chrome, MessageSquare, Layout, Database, User, Settings, Home, Power } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
   NavigationMenu,
@@ -13,6 +13,14 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { useState } from "react"
+import { TerminalDialog } from "./terminal-dialog"
+import {
+  Dialog,
+  DialogContent,
+} from "@/components/ui/dialog"
+import { SimpleChat } from "@/components/simple-chat"
+import { ChatDialog } from "./chat-dialog"
 
 const components: { title: string; href: string; description: string; icon: React.ReactNode }[] = [
   {
@@ -54,55 +62,95 @@ const components: { title: string; href: string; description: string; icon: Reac
 ]
 
 export function MainNav() {
-  return (
-    <NavigationMenu className="flex-1">
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <Link href="/" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              <Home className="w-4 h-4 mr-2" />
-              CloudOS
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Tools</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                  icon={component.icon}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenuList>
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false)
+  const [isAIOpen, setIsAIOpen] = useState(false)
+  const [isChatOpen, setIsChatOpen] = useState(false)
 
-      <div className="flex items-center ml-auto gap-2">
-        <NavigationMenuItem>
-          <Link href="/profile" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              <User className="w-4 h-4 mr-2" />
-              Profile
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/settings" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              <Settings className="w-4 h-4 mr-2" />
-              Settings
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-      </div>
-    </NavigationMenu>
+  return (
+    <>
+      <NavigationMenu className="flex-1">
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <Link href="/" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                {/* <Home className="w-4 h-4 mr-2" /> */}
+                <Power className="w-4 h-4 mr-2" />
+                DevOS
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            
+            <NavigationMenuTrigger>Tools</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                {components.map((component) => (
+                  <ListItem
+                    key={component.title}
+                    title={component.title}
+                    href={component.href}
+                    icon={component.icon}
+                  >
+                    {component.description}
+                  </ListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+
+        <div className="flex items-center ml-auto gap-2">
+          <NavigationMenuItem>
+            <button
+              onClick={() => setIsChatOpen(true)}
+              className={navigationMenuTriggerStyle()}
+            >
+              <MessageSquare className="w-4 h-4 mr-2" />
+              Chat
+            </button>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <button
+              onClick={() => setIsTerminalOpen(true)}
+              className={navigationMenuTriggerStyle()}
+            >
+              <Terminal className="w-4 h-4 mr-2" />
+              Bash
+            </button>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/profile" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <User className="w-4 h-4 mr-2" />
+                Profile
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/settings" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <Settings className="w-4 h-4 mr-2" />
+                Settings
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        </div>
+      </NavigationMenu>
+
+      <TerminalDialog 
+        isOpen={isTerminalOpen}
+        onOpenChange={setIsTerminalOpen}
+      />
+      <ChatDialog 
+        isOpen={isChatOpen}
+        onOpenChange={setIsChatOpen}
+      />
+      <Dialog open={isAIOpen} onOpenChange={setIsAIOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <SimpleChat />
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }
 
