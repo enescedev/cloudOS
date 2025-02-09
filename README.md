@@ -80,7 +80,8 @@ Web Virtual Linux Environment with Integrated Applications
 
 ![image](https://github.com/user-attachments/assets/4b99ccef-3785-4748-adcd-bee942147131)
 
-Kullanım adımları:
+## Kullanım adımları:
+
 1. Docker image'ı build edin:
 ```bash
 docker build -t devos:latest .
